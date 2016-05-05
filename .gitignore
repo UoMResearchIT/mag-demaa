@@ -1,0 +1,5 @@
+# Ignore some things
+.DS_Store
+processing/gaze_reveal/frames-*/
+heatmap/art/*
+img/art/*

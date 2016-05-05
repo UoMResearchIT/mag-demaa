@@ -1,0 +1,100 @@
+/**
+ *	Data visualisations for MAG eye tracking project
+ *	July 2015
+ *	@author rob.dunne@manchester.ac.uk
+ */
+
+/* Mobile first queries */
+
+/* Styles here apply to individual devices */
+
+/* Larger than mobile */
+@media (min-width: 400px) {
+	#branding::after { 
+		content: ""
+	}
+
+	#branding img {
+		display: inline-block;
+		max-width: 170px;
+		width: 45%;
+	}
+	
+	#mag-logo {
+		margin: 0 0 0 10px;
+		position: relative;
+		top: -8px;
+	}
+}
+
+/* Larger than phablet */
+@media (min-width: 550px) {
+	
+}
+
+/* Larger than tablet */
+@media (min-width: 750px) {
+	main {
+		padding: 0 10px 30px;
+	}
+	
+	#main-nav {
+		display: none;
+	}
+	
+	#desktop-nav {
+		display: block;
+	}
+	
+	#main-nav nav span {
+		display: inline;
+	}
+	
+	#mag-logo {
+		margin: 0 0 0 20px;
+		position: relative;
+		top: -10px;
+	}
+	
+	#video-text,
+	#image-text {
+		margin: 20px 0;
+	}
+}
+
+/* Larger than desktop */
+@media (min-width: 1000px) {
+	#mag-logo {
+		margin: 0 0 0 20px;
+		position: relative;
+		top: -9px;
+	}
+	
+	#animation-wrapper,
+	#video-wrapper,
+	#image-wrapper {
+		display: none;
+	}
+	
+	#animation-wrapper-desktop,
+	#video-wrapper-desktop,
+	#image-wrapper-desktop {
+		display: block;
+		background: #fff;
+    	display: block;
+    	padding: 10px;
+	}
+	
+	#nav-controls .data-view-move {
+		padding: 1%;
+		width: 47%;
+	}
+	
+	#controls .data-view-select {
+		padding: 1%;
+		width: 47%;
+	}
+}
+
+/* Larger than Desktop HD */
+@media (min-width: 1200px) {}

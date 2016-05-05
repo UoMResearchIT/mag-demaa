@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html ng-app="app">
+</head>
+	<!-- Meta data -->
+	<title>MAG Eye tracking</title>
+	<meta charset="utf-8">
+	
+	<!-- Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,700,300' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+	
+	<!-- Icons -->
+	<link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css">
+	
+	<!-- JS -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/angular.min.js"></script>
+	<script src="js/loaded.min.js"></script>
+	<script src="js/mansonry.min.js"></script>
+	<script src="js/transit.min.js"></script>
+	<script src="js/mag.js"></script>
+	
+	<!-- CSS -->
+	<link href="css/skeleton/normalize.css" rel="stylesheet">
+	<link href="css/skeleton/skeleton.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+	<link href="css/responsive.css" rel="stylesheet">
+	
+</head>
+<body ng-controller="dataImage" class="container">
+	<header class="row" ng-show="view.header.show">
+		<div id="branding" class="five columns">
+			<img id="uom-logo" src="img/uom.png" alt="University of Manchester logo">
+			<img id="mag-logo" src="img/logo-mag.png" alt="Manchester Art Gallery logo">
+		</div>
+		
+		<div id="desktop-nav" class="seven columns">
+			<nav>
+				<span class="view-type-control" ng-click="loadHome()">Home</span>
+				<span class="view-type-control" ng-click="loadImages()">Images</span>
+				<span class="view-type-control" ng-click="loadVideo()">Video</span>
+			</div>
+		</div>
+		
+		<div id="main-nav" class="twelve columns">
+			<i class="fa fa-bars" id="mobile-menu-icon" alt="Menu icon" ng-click="view.menu = (view.menu) ? false: true"></i>
+			
+			<nav ng-show="view.menu">
+				<span class="view-type-control" ng-click="loadHome()">Home</span>
+				<span class="view-type-control" ng-click="loadImages()">Images</span>
+				<span class="view-type-control" ng-click="loadVideo()">Video</span>
+			</div>
+		</div>
+	</header>
+	
+	<main class="row">
+		<!-- Home -->
+		<div id="mag-home" ng-show="view.home.show">
+			<h1>Following the gaze</h1>
+			
+			<hr>
+			
+			<h4>DEMAA is a collaborative artwork eye tracking project by the 
+				University of Manchester and 
+				Manchester Art Gallery
+			</h4>
+			
+			<div id="start-arrow" ng-click="loadImages()">
+				<i class="fa fa-arrow-circle-o-down"></i>
+			</div>
+			
+		</div>
+	
+		<!-- Images -->
+		<div id="mag-images" ng-show="view.images.show">
+			<!-- Desktop image -->
+			<div id="image-wrapper-desktop" class="six columns">
+				<img ng-src="img/{{ image.src }}" alt="Eye tracking image">
+			</div>
+			
+			<!-- Left panel plus mobile image view -->		
+			<div class="six columns">
+				<!-- Controls for to show different image overlays -->
+				<div id="nav-controls">
+					<span ng-click="loadImages(view.images.currentFile-1)" class="data-view-move">
+						<i class="fa fa-arrow-circle-left"></i>
+					</span>
+				
+					<span ng-click="loadImages(view.images.currentFile+1)" class="data-view-move">
+						<i class="fa fa-arrow-circle-right"></i>
+					</span>
+				</div>
+				
+				<div id="controls">				
+					<span class="data-view-select" ng-click="changeImagesView('plain')">
+						View image
+					</span>
+				
+					<span class="data-view-select" ng-click="changeImagesView('heatmap')">
+						View heatmap
+					</span>
+				</div>
+				
+				<!-- Image -->
+				<div id="image-wrapper">
+					<img id="gaze-image" ng-src="img/{{ image.src }}" alt="Eye tracking image">
+				</div>
+			
+				<!-- Text -->
+				<div id="image-text">
+					<h5>{{ image.title }}</h5>					
+					<p>{{ image.text }}</p>
+					<cite>Credit: {{ image.copyright }}</cite>
+				</div>
+			
+				<!-- A block of images to view. ng-repeat -->
+				<div id="image-list-static" class="image-list">
+					<div class="grid-item" ng-repeat="(key, val) in data.images track by $index">
+						<img alt="{{ val.title }}" ng-src="img/{{ val.image }}" ng-click="loadImages(key)">
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<!-- Video -->
+		<div id="mag-video" ng-show="view.video.show">
+			<!-- Desktop video -->
+			<div id="video-wrapper-desktop" class="six columns">
+				<video controls ng-src="{{ video.mp4 }}" type='video/mp4' poster="img/art/{{ video.image }}">
+					Your browser does not support HTML5 video.
+				</video>
+			</div>
+			
+			<!-- Left panel plus mobile image view -->		
+			<div class="six columns">
+				<!-- Controls for to show different image overlays -->
+				<div id="nav-controls">
+					<span ng-click="loadVideo(view.video.currentFile-1)" class="data-view-move">
+						<i class="fa fa-arrow-circle-left"></i>
+					</span>
+				
+					<span ng-click="loadVideo(view.video.currentFile+1)" class="data-view-move">
+						<i class="fa fa-arrow-circle-right"></i>
+					</span>
+				</div>
+				
+				<!-- Video -->
+				<div id="video-wrapper">
+					<video controls ng-src="{{ video.mp4 }}" type='video/mp4' poster="img/art/{{ video.image }}">
+						Your browser does not support HTML5 video.
+					</video>
+				</div>
+			
+				<!-- Text -->
+				<div id="video-text">
+					<h5>{{ video.title }}</h5>					
+					<p>{{ video.text }}</p>
+					<cite>Credit: {{ video.copyright }}</cite>
+				</div>
+			
+				<!-- A block of video to view. ng-repeat -->
+				<div id="video-list-static" class="video-list">
+					<div class="grid-item" ng-repeat="(key, val) in data.videos track by $index" ng-click="loadVideo(key); scrollToVideo()">
+						<img alt="{{ val.title }}" ng-src="img/art/{{ val.image }}" data-file="{{ val.image }}">
+						<p>
+							<strong>{{ val.title }}</strong><i class="fa fa-video-camera"></i><br>
+							<span>{{ val.text }} </span>
+						</p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</main>
+	
+	<footer>
+		
+	</footer>
+</body>
+</html>
